@@ -31,6 +31,8 @@ class InboundEmail extends Model
 
         static::creating(function ($model) {
             $model->message_id = $model->id();
+            $model->waybill_number =  Str::startsWith($model->subject(), "Fwd: ") ? Str::replaceFirst("Fwd: ", "", $model->subject()) : $model->subject();
+            $model->sender_email =  $model->from();
         });
     }
 
